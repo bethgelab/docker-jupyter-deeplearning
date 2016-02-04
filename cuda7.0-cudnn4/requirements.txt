@@ -1,0 +1,7 @@
+scikit-image>=0.9.3
+h5py>=2.2.0
+leveldb>=0.191
+networkx>=1.8.1
+joblib
+bloscpack
+keras
