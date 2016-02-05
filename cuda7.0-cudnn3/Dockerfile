@@ -43,8 +43,7 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
   python-zmq \
   cmake
 
-RUN git clone https://github.com/facebook/iTorch.git \
-  && ~/itorch \
+RUN git clone https://github.com/facebook/iTorch.git ~/itorch \
   && cd ~/itorch \
   && luarocks make \
   && cp -r /root/.ipython/* /usr/local/share/jupyter/
@@ -101,10 +100,10 @@ RUN autoreconf -ivf \
   && ./configure \
   && make -j`nproc` \
   && sudo make install \
-  && RUN sudo ldconfig
+  && sudo ldconfig
 
 WORKDIR /tmp/build_fblualib/fbthrift/thrift
-  && autoreconf -ivf \
+RUN autoreconf -ivf \
   && ./configure \
   && make -j`nproc` \
   && sudo make install
