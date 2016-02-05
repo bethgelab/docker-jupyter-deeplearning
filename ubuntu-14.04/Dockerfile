@@ -34,40 +34,41 @@ RUN pip2 install -r /tmp/requirements.txt
 # including Lua, iTorch, loadcaffe, fblualib
 
 RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-  torch7-nv \
-  libzmq3-dev \
-  libssl-dev \
-  python-zmq \
-  cmake \
-  libprotobuf-dev \
-  protobuf-compiler \
-  autoconf \
-  autoconf-archive \
-  automake \
-  binutils-dev \
-  bison \
-  flex \
-  g++ \
-  libtool \
-  libboost-all-dev \
-  libedit-dev \
-  libevent-dev \
-  libdouble-conversion-dev \
-  libgoogle-glog-dev \
-  libgflags-dev \
-  libiberty-dev \
-  libjemalloc-dev \
-  libkrb5-dev \
-  liblz4-dev \
-  liblzma-dev \
-  libmatio-dev \
-  libnuma-dev \
-  libsasl2-dev \
-  libsnappy-dev \
-  libssl-dev \
-  make \
-  pkg-config \
-  zlib1g-dev
+    torch7-nv \
+    libzmq3-dev \
+    libssl-dev \
+    python-zmq \
+    cmake \
+    libprotobuf-dev \
+    protobuf-compiler \
+    autoconf \
+    autoconf-archive \
+    automake \
+    binutils-dev \
+    bison \
+    flex \
+    g++ \
+    libtool \
+    libboost-all-dev \
+    libedit-dev \
+    libevent-dev \
+    libdouble-conversion-dev \
+    libgoogle-glog-dev \
+    libgflags-dev \
+    libiberty-dev \
+    libjemalloc-dev \
+    libkrb5-dev \
+    liblz4-dev \
+    liblzma-dev \
+    libmatio-dev \
+    libnuma-dev \
+    libsasl2-dev \
+    libsnappy-dev \
+    libssl-dev \
+    make \
+    pkg-config \
+    zlib1g-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/facebook/iTorch.git ~/itorch \
   && cd ~/itorch \
