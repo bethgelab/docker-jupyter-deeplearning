@@ -5,7 +5,8 @@ MAINTAINER Bethge Lab <opensource@bethgelab.org>
 # Install Caffe
 # -------------
 
-RUN apt-get install wget
+RUN apt-get update && apt-get install -y --no-install-recommends wget \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN CUDA_REPO_PKG=cuda-repo-ubuntu1404_7.5-18_amd64.deb && \
     wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/$CUDA_REPO_PKG && \
@@ -30,43 +31,16 @@ RUN pip2 install -r /tmp/requirements.txt
 
 # Install Torch
 # -------------
+# including Lua, iTorch, loadcaffe, fblualib
 
-RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
-  torch7-nv
-
-# Install iTorch
-# --------------
-
-RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+  torch7-nv \
   libzmq3-dev \
   libssl-dev \
   python-zmq \
-  cmake
-
-RUN git clone https://github.com/facebook/iTorch.git ~/itorch \
-  && cd ~/itorch \
-  && luarocks make \
-  && cp -r /root/.ipython/* /usr/local/share/jupyter/
-
-# Install loadcaffe
-# -----------------
-RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+  cmake \
   libprotobuf-dev \
-  protobuf-compiler
-
-RUN luarocks install loadcaffe
-
-# Install fblualib
-# -----------------
-RUN mkdir /tmp/build_fblualib
-
-WORKDIR /tmp/build_fblualib
-RUN  git clone -b v0.35.0 --depth 1 https://github.com/facebook/folly.git \
-  && git clone -b v0.24.0 --depth 1 https://github.com/facebook/fbthrift.git \
-  && git clone https://github.com/facebook/thpp \
-  && git clone https://github.com/facebook/fblualib
-
-RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+  protobuf-compiler \
   autoconf \
   autoconf-archive \
   automake \
@@ -95,26 +69,37 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --n
   pkg-config \
   zlib1g-dev
 
-WORKDIR /tmp/build_fblualib/folly/folly
-RUN autoreconf -ivf \
+RUN git clone https://github.com/facebook/iTorch.git ~/itorch \
+  && cd ~/itorch \
+  && luarocks make \
+  && cp -r /root/.ipython/* /usr/local/share/jupyter/
+
+RUN luarocks install loadcaffe
+
+RUN mkdir /tmp/build_fblualib \
+  && cd /tmp/build_fblualib \
+  && git clone -b v0.35.0 --depth 1 https://github.com/facebook/folly.git \
+  && git clone -b v0.24.0 --depth 1 https://github.com/facebook/fbthrift.git \
+  && git clone https://github.com/facebook/thpp \
+  && git clone https://github.com/facebook/fblualib \
+  && cd /tmp/build_fblualib/folly/folly \
+  && autoreconf -ivf \
   && ./configure \
   && make -j`nproc` \
   && sudo make install \
-  && sudo ldconfig
-
-WORKDIR /tmp/build_fblualib/fbthrift/thrift
-RUN autoreconf -ivf \
+  && sudo ldconfig \
+  && cd /tmp/build_fblualib/fbthrift/thrift \
+  && autoreconf -ivf \
   && ./configure \
   && make -j`nproc` \
-  && sudo make install
-
-WORKDIR /tmp/build_fblualib/thpp/thpp
-RUN ./build.sh
-
-WORKDIR /tmp/build_fblualib/fblualib/fblualib
-RUN ./build.sh && ldconfig
-
-WORKDIR /
+  && sudo make install \
+  && cd /tmp/build_fblualib/thpp/thpp \
+  && ./build.sh \
+  && cd /tmp/build_fblualib/fblualib/fblualib \
+  && ./build.sh \
+  && ldconfig \
+  && cd /
+  && rm -rf /tmp/build_fblualib
 
 
 # Install TensorFlow CPU version
