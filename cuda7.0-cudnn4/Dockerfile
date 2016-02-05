@@ -1,4 +1,4 @@
-FROM bethgelab/jupyter-scipyserver:cuda7.0-cudnn4
+FROM bethgelab/docker-jupyter-scipyserver:cuda7.0-cudnn4
 
 MAINTAINER Bethge Lab <opensource@bethgelab.org>
 
@@ -43,9 +43,11 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
   python-zmq \
   cmake
 
-RUN git clone https://github.com/facebook/iTorch.git ~/itorch
-RUN cd ~/itorch && luarocks make
-RUN cp -r /root/.ipython/* /usr/local/share/jupyter/
+RUN git clone https://github.com/facebook/iTorch.git \
+  && ~/itorch \
+  && cd ~/itorch \
+  && luarocks make \
+  && cp -r /root/.ipython/* /usr/local/share/jupyter/
 
 # Install loadcaffe
 # -----------------
@@ -95,25 +97,23 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --n
   zlib1g-dev
 
 WORKDIR /tmp/build_fblualib/folly/folly
-RUN autoreconf -ivf
-RUN ./configure
-RUN make -j`nproc`
-RUN sudo make install
-RUN sudo ldconfig
+RUN autoreconf -ivf \
+  && ./configure \
+  && make -j`nproc` \
+  && sudo make install \
+  && RUN sudo ldconfig
 
 WORKDIR /tmp/build_fblualib/fbthrift/thrift
-RUN autoreconf -ivf
-RUN ./configure
-RUN make -j`nproc`
-RUN sudo make install
+  && autoreconf -ivf \
+  && ./configure \
+  && make -j`nproc` \
+  && sudo make install
 
 WORKDIR /tmp/build_fblualib/thpp/thpp
 RUN ./build.sh
 
 WORKDIR /tmp/build_fblualib/fblualib/fblualib
-RUN ./build.sh
-
-RUN ldconfig
+RUN ./build.sh && ldconfig
 
 WORKDIR /
 
