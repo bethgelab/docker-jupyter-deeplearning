@@ -5,9 +5,6 @@ MAINTAINER Bethge Lab <opensource@bethgelab.org>
 # Install Caffe
 # -------------
 
-RUN apt-get update && apt-get install -y --no-install-recommends wget \
-  && rm -rf /var/lib/apt/lists/*
-
 RUN CUDA_REPO_PKG=cuda-repo-ubuntu1404_7.5-18_amd64.deb && \
     wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/$CUDA_REPO_PKG && \
     sudo dpkg -i $CUDA_REPO_PKG
@@ -35,7 +32,6 @@ RUN pip2 install -r /tmp/requirements.txt
 
 RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
     torch7-nv \
-    libzmq3-dev \
     libssl-dev \
     python-zmq \
     cmake \
@@ -65,9 +61,7 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --n
     libsasl2-dev \
     libsnappy-dev \
     libssl-dev \
-    make \
     pkg-config \
-    zlib1g-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/facebook/iTorch.git ~/itorch \
