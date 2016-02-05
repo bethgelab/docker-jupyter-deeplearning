@@ -1,4 +1,4 @@
-FROM bethgelab/docker-jupyter-scipyserver:ubuntu-14.04
+FROM bethgelab/jupyter-scipyserver:ubuntu-14.04
 
 MAINTAINER Bethge Lab <opensource@bethgelab.org>
 

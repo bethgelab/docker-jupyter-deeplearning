@@ -1,4 +1,4 @@
-FROM bethgelab/docker-jupyter-scipyserver:cuda7.0-cudnn4
+FROM bethgelab/jupyter-scipyserver:cuda7.0-cudnn4
 
 MAINTAINER Bethge Lab <opensource@bethgelab.org>
 

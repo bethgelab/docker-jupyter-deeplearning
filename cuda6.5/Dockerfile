@@ -1,4 +1,4 @@
-FROM bethgelab/docker-jupyter-scipyserver:cuda6.5
+FROM bethgelab/jupyter-scipyserver:cuda6.5
 
 MAINTAINER Bethge Lab <opensource@bethgelab.org>
 
