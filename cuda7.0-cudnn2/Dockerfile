@@ -76,24 +76,27 @@ RUN mkdir /tmp/build_fblualib \
   && git clone -b v0.35.0 --depth 1 https://github.com/facebook/folly.git \
   && git clone -b v0.24.0 --depth 1 https://github.com/facebook/fbthrift.git \
   && git clone https://github.com/facebook/thpp \
-  && git clone https://github.com/facebook/fblualib \
-  && cd /tmp/build_fblualib/folly/folly \
+  && git clone https://github.com/facebook/fblualib
+
+RUN cd /tmp/build_fblualib/folly/folly \
   && autoreconf -ivf \
   && ./configure \
   && make -j`nproc` \
   && sudo make install \
-  && sudo ldconfig \
-  && cd /tmp/build_fblualib/fbthrift/thrift \
+  && sudo ldconfig
+
+RUN cd /tmp/build_fblualib/fbthrift/thrift \
   && autoreconf -ivf \
   && ./configure \
   && make -j`nproc` \
-  && sudo make install \
-  && cd /tmp/build_fblualib/thpp/thpp \
+  && sudo make install
+
+RUN cd /tmp/build_fblualib/thpp/thpp \
   && ./build.sh \
   && cd /tmp/build_fblualib/fblualib/fblualib \
   && ./build.sh \
   && ldconfig \
-  && cd /
+  && cd / \
   && rm -rf /tmp/build_fblualib
 
 
