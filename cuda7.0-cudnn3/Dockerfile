@@ -100,10 +100,10 @@ RUN cd /tmp/build_fblualib/thpp/thpp \
   && rm -rf /tmp/build_fblualib
 
 
-# Install TensorFlow CPU version
+# Install TensorFlow GPU version
 # ------------------------------
 ENV TENSORFLOW_VERSION 0.6.0
 RUN pip2 --no-cache-dir install \
-    https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-${TENSORFLOW_VERSION}-cp27-none-linux_x86_64.whl \
+    https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow-${TENSORFLOW_VERSION}-cp27-none-linux_x86_64.whl \
     --trusted-host storage.googleapis.com
 
