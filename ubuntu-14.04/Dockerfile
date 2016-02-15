@@ -32,26 +32,20 @@ RUN pip2 install -r /tmp/requirements.txt
 # including Lua, iTorch, loadcaffe, fblualib
 
 RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-    torch7-nv \
-    libssl-dev \
-    python-zmq \
-    cmake \
-    libprotobuf-dev \
-    protobuf-compiler \
     autoconf \
     autoconf-archive \
     automake \
     binutils-dev \
     bison \
+    cmake \
     flex \
     g++ \
-    libtool \
     libboost-all-dev \
+    libdouble-conversion-dev \
     libedit-dev \
     libevent-dev \
-    libdouble-conversion-dev \
-    libgoogle-glog-dev \
     libgflags-dev \
+    libgoogle-glog-dev \
     libiberty-dev \
     libjemalloc-dev \
     libkrb5-dev \
@@ -59,11 +53,21 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -yq --n
     liblzma-dev \
     libmatio-dev \
     libnuma-dev \
+    libprotobuf-dev \
     libsasl2-dev \
     libsnappy-dev \
     libssl-dev \
+    libssl-dev \
+    libtool \
     pkg-config \
+    protobuf-compiler \
+    python-zmq \
+    torch7-nv \
+    unzip \
   && rm -rf /var/lib/apt/lists/*
+
+# workaround
+RUN ln -s /usr/lib/x86_64-linux-gnu/libTH* /usr/lib/
 
 RUN git clone https://github.com/facebook/iTorch.git ~/itorch \
   && cd ~/itorch \
