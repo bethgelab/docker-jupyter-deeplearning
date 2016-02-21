@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
 
 ADD requirements.txt /tmp/requirements.txt
 RUN pip2 install -r /tmp/requirements.txt
+RUN pip3 install -r /tmp/requirements.txt
 
 # Install Torch
 # -------------
