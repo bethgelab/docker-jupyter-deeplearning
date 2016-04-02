@@ -25,8 +25,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
     rm -rf /var/lib/apt/lists/*
 
 ADD requirements.txt /tmp/requirements.txt
-RUN pip2 install -r /tmp/requirements.txt
-RUN pip3 install -r /tmp/requirements.txt
+RUN pip2 install --no-cache-dir -r /tmp/requirements.txt
+RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
 
 # Install TensorFlow GPU version
 # ------------------------------
