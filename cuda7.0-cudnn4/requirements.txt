@@ -3,4 +3,5 @@ h5py>=2.2.0
 leveldb>=0.191
 networkx>=1.8.1
 joblib
+git+https://github.com/tflearn/tflearn.git
 keras

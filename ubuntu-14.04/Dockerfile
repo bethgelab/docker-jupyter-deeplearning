@@ -17,21 +17,20 @@ ENV CAFFE_VERSION 0.14
 LABEL com.nvidia.caffe.version="0.14"
 
 # see https://github.com/NVIDIA/nvidia-docker/blob/master/ubuntu-14.04/caffe/Dockerfile
-ENV CAFFE_PKG_VERSION 0.14.2-1
+ENV CAFFE_PKG_VERSION 0.14.5-2+cuda7.5
 RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
             caffe-nv=$CAFFE_PKG_VERSION \
             caffe-nv-tools=$CAFFE_PKG_VERSION \
             python-caffe-nv=$CAFFE_PKG_VERSION && \
     rm -rf /var/lib/apt/lists/*
 
-ADD requirements.txt /tmp/requirements.txt
-RUN pip2 install --no-cache-dir -r /tmp/requirements.txt
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
-
 # Install TensorFlow GPU version
 # ------------------------------
 RUN pip2 --no-cache-dir install \
-    https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow-0.8.0rc0-cp27-none-linux_x86_64.whl
+    https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp27-none-linux_x86_64.whl
 RUN pip3 --no-cache-dir install \
-    https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow-0.8.0rc0-cp34-cp34m-linux_x86_64.whl
+    https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.9.0-cp34-cp34m-linux_x86_64.whl
 
+ADD requirements.txt /tmp/requirements.txt
+RUN pip2 install --no-cache-dir -r /tmp/requirements.txt
+RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
