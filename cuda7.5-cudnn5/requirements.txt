@@ -5,3 +5,4 @@ networkx>=1.8.1
 joblib
 git+https://github.com/tflearn/tflearn.git
 keras
+python-dateutil>=2.5.3
